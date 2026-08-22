@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
+
 
 class NhanVien {
 public:
@@ -24,23 +26,25 @@ public:
 
 int main() {
     int n;
-    cout << "[CACH 2 - MANG DONG] Nhap so luong nhan vien: ";
+    cout << "[CACH 3 - VECTOR] Nhap so luong nhan vien: ";
     cin >> n;
     cin.ignore(); 
 
-    NhanVien *dsnv = new NhanVien[n]; 
+    vector<NhanVien> dsnv; 
 
     for(int i = 0; i < n; i++) {
         cout << "\n=== NHAP THONG TIN CHO NHAN VIEN THU " << i + 1 << " ===" << endl;
-        dsnv[i].nhap();
+        
+        NhanVien nv_tam;  
+        nv_tam.nhap();   
+        
+        dsnv.push_back(nv_tam);
     }
 
     cout << "\n=== DANH SACH NHAN VIEN CUA CONG TY ===" << endl;
-    for(int i = 0; i < n; i++) {
+    for(int i = 0; i < dsnv.size(); i++) {
         dsnv[i].xuat();
     }
-
-    delete[] dsnv; 
 
     return 0;
 }
