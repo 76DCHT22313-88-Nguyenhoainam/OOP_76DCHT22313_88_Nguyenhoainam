@@ -4,10 +4,7 @@ using namespace std;
 
 class NhanVien {
 public:
-    string manv;
-    string hoten;
-    string ngaysinh;
-    string diachi;
+    string manv, hoten, ngaysinh, diachi;
 
     void nhap() {
         cout << "Nhap ma nhan vien: ";
@@ -27,12 +24,11 @@ public:
 
 int main() {
     int n;
-    cout << "Nhap so luong nhan vien ban muon them: ";
+    cout << "[CACH 2 - MANG DONG] Nhap so luong nhan vien: ";
     cin >> n;
-
     cin.ignore(); 
 
-    NhanVien dsnv[100];
+    NhanVien *dsnv = new NhanVien[n]; 
 
     for(int i = 0; i < n; i++) {
         cout << "\n=== NHAP THONG TIN CHO NHAN VIEN THU " << i + 1 << " ===" << endl;
@@ -43,6 +39,8 @@ int main() {
     for(int i = 0; i < n; i++) {
         dsnv[i].xuat();
     }
+
+    delete[] dsnv; 
 
     return 0;
 }
