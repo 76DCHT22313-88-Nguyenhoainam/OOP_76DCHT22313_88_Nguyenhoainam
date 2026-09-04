@@ -6,10 +6,9 @@ class SinhVien {
 private:
     string hoTen;
     int namSinh;
-    float diem[5];
+    float diem[5]; 
 
 public:
-    // Cau 2: Phuong thuc nhap
     void nhap() {
         cin.ignore(); 
         cout << "Nhap ho ten: ";
@@ -24,7 +23,6 @@ public:
         }
     }
 
-    // Cau 2: Phuong thuc tinh diem trung binh
     float tinhDTB() {
         float tong = 0;
         for(int i = 0; i < 5; i++) {
@@ -33,17 +31,50 @@ public:
         return tong / 5.0; 
     }
 
-    // Cau 2: Phuong thuc xuat
     void xuat() {
         cout << hoTen << " | Nam sinh: " << namSinh << " | Diem TB: " << tinhDTB() << endl;
     }
-};
 
+    // Cau 3: Phuong thuc kiem tra va in thong tin mon thi lai (< 5)
+    void inThongTinThiLai() {
+        bool phaiThiLai = false;
+        
+        for(int i = 0; i < 5; i++) {
+            if(diem[i] < 5.0) {
+                phaiThiLai = true;
+                break; 
+            }
+        }
+        
+        if(phaiThiLai == true) {
+            cout << "\n* Sinh vien: " << hoTen << " (Nam sinh: " << namSinh << ")" << endl;
+            cout << "  Cac mon phai thi lai:" << endl;
+            for(int i = 0; i < 5; i++) {
+                if(diem[i] < 5.0) {
+                    cout << "  - Mon " << i + 1 << ": " << diem[i] << " diem" << endl;
+                }
+            }
+        }
+    }
+}; 
+
+// Cau 3: Nhap n sinh vien va in thong tin thi lai
 int main() {
-    SinhVien sv;
-    cout << "--- TEST NHAP 1 SINH VIEN ---" << endl;
-    sv.nhap();
-    cout << "\n--- THONG TIN VUA NHAP ---" << endl;
-    sv.xuat();
+    int n;
+    SinhVien ds[100]; 
+
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+
+    for(int i = 0; i < n; i++) {
+        cout << "\n=== NHAP THONG TIN SINH VIEN THU " << i + 1 << " ===" << endl;
+        ds[i].nhap();
+    }
+
+    cout << "\n================ DANH SACH SINH VIEN PHAI THI LAI ================" << endl;
+    for(int i = 0; i < n; i++) {
+        ds[i].inThongTinThiLai();
+    }
+
     return 0;
 }
