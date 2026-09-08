@@ -12,7 +12,6 @@ public:
     PhanSo(int t, int m) { tuSo = t; mauSo = m; }
     ~PhanSo() {}
 
-    // Ham phu tro: Tim UCLN de rut gon
     int timUCLN(int a, int b) {
         a = abs(a); b = abs(b);
         while (a * b != 0) {
@@ -22,7 +21,6 @@ public:
         return a + b;
     }
 
-    // Cau 2: Phuong thuc nhap, xuat, rut gon
     void nhap() {
         cout << "Nhap tu so: "; cin >> tuSo;
         do {
@@ -43,7 +41,6 @@ public:
         if (mauSo < 0) { tuSo = -tuSo; mauSo = -mauSo; }
     }
 
-    // Cau 2: Phuong thuc Cong, Tru, Nhan, Chia
     PhanSo cong(PhanSo ps2) {
         PhanSo kq;
         kq.tuSo = tuSo * ps2.mauSo + mauSo * ps2.tuSo;
@@ -77,6 +74,28 @@ public:
     }
 };
 
+// Cau 3: Thuc hien tinh toan va in ket qua
 int main() {
+    PhanSo ps1, ps2, kq;
+
+    cout << "--- NHAP PHAN SO 1 ---" << endl;
+    ps1.nhap();
+    cout << "\n--- NHAP PHAN SO 2 ---" << endl;
+    ps2.nhap();
+
+    cout << "\n================ KET QUA ================" << endl;
+    
+    kq = ps1.cong(ps2);
+    cout << "Phep Cong: "; kq.xuat(); cout << endl;
+
+    kq = ps1.tru(ps2);
+    cout << "Phep Tru: "; kq.xuat(); cout << endl;
+
+    kq = ps1.nhan(ps2);
+    cout << "Phep Nhan: "; kq.xuat(); cout << endl;
+
+    kq = ps1.chia(ps2);
+    cout << "Phep Chia: "; kq.xuat(); cout << endl;
+
     return 0;
 }
