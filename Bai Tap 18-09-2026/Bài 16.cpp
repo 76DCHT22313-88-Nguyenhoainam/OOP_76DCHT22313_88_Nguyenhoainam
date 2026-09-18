@@ -29,7 +29,7 @@ void MonHoc::nhap() {
     cout << "Nhap diem chuyen can (CC): "; cin >> diemCC;
     cout << "Nhap diem kiem tra (KT): "; cin >> diemKT;
     cout << "Nhap diem thi (DT): "; cin >> diemThi;
-    cin.ignore(); // Xoa ki tu Enter sau khi nhap diem
+    cin.ignore(); 
 }
 
 void MonHoc::xuat() {
@@ -40,18 +40,16 @@ void SinhVien::nhap() {
     cout << "Nhap ho ten sinh vien: "; getline(cin, hoTen);
     cout << "Nhap lop: "; getline(cin, lop);
     cout << "Nhap ma sinh vien: "; getline(cin, msv);
-    MonHoc::nhap(); // Goi ham nhap thong tin diem cua lop cha
+    MonHoc::nhap(); 
 }
 
 void SinhVien::xuat() {
-    cout << "SV: " << hoTen << " - " << msv << " - Lop: " << lop << " | ";
-    MonHoc::xuat(); // In thong tin diem cua lop cha
+    cout << "SV: " << hoTen << " - " << msv << " - Lop: " << lop << "\n   -> ";
+    MonHoc::xuat(); 
     cout << " | Diem HP: " << tinhDiemHP() << endl;
 }
 
 float SinhVien::tinhDiemHP() {
-    // Gia su cong thuc la: 20% CC + 30% KT + 50% Thi
-   
     return diemCC * 0.2 + diemKT * 0.3 + diemThi * 0.5;
 }
 
@@ -62,15 +60,39 @@ float SinhVien::getDiemCC() {
 float SinhVien::getDiemKT() {
     return diemKT;
 }
+
+//CAU 3: MAIN (DANH SACH CAM THI)
 int main()
 {
-    // Chay thu
-    cout << "--- TEST NHAP XUAT 1 SINH VIEN ---" << endl;
-    SinhVien sv;
-    sv.nhap();
+    int n;
+    SinhVien ds[100];
     
-    cout << "\n--- THONG TIN VUA NHAP ---" << endl;
-    sv.xuat();
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+    cin.ignore(); 
+
+    // 1. Nhap thong tin n sinh vien
+    for(int i = 0; i < n; i++){
+        cout << "\n--- Nhap thong tin sinh vien thu " << i+1 << " ---" << endl;
+        ds[i].nhap();
+    }
+
+    cout << "\n================ DANH SACH SINH VIEN BI CAM THI ================" << endl;
+    cout << "(Dieu kien: Diem chuyen can duoi 5 hoac diem kiem tra bang 0)" << endl;
+    
+    bool coNguoiCamThi = false; // Bien dung de kiem tra xem co sinh vien nao bi cam khong
+
+    for(int i = 0; i < n; i++){
+        // Xet dieu kien cam thi dua theo bai toan
+        if(ds[i].getDiemCC() < 5 || ds[i].getDiemKT() == 0){
+            ds[i].xuat();
+            coNguoiCamThi = true;
+        }
+    }
+
+    if(coNguoiCamThi == false){
+        cout << "Tot qua! Khong co sinh vien nao bi cam thi trong danh sach." << endl;
+    }
 
     return 0;
 }
