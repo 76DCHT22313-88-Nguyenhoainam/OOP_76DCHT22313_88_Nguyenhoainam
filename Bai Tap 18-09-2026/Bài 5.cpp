@@ -11,6 +11,7 @@ class nguoi {
         void nhap();
         void xuat();
 };
+
 class SinhVien: public nguoi {
     private: 
         string msv;
@@ -51,16 +52,41 @@ string SinhVien::getMsv() {
 string SinhVien::getHoTen() {
     return hoten;
 }
+
+//CAU 3: MAIN (NHAP XUAT & TIM KIEM)
 int main()
 {
-    // Tao thu 1 doi tuong
-    cout << "--- TEST NHAP XUAT 1 SINH VIEN ---" << endl;
-    SinhVien sv;
+    int n;
+    SinhVien ds[100]; 
     
-    sv.nhap();
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+    cin.ignore(); 
+
+    for(int i = 0; i < n; i++){
+        cout << "\n--- Nhap thong tin sinh vien thu " << i+1 << " ---" << endl;
+        ds[i].nhap();
+        cin.ignore(); 
+    }
+
+    string tuKhoa;
+    cout << "\nTIM KIEM" << endl;
+    cout << "Nhap ten hoac ma sinh vien can tim: ";
+    getline(cin, tuKhoa); 
+
+    bool timThay = false; 
     
-    cout << "\n--- KET QUA ---" << endl;
-    sv.xuat();
+    cout << "\nKET QUA TIM KIEM:" << endl;
+    for(int i = 0; i < n; i++){
+        if(ds[i].getMsv() == tuKhoa || ds[i].getHoTen() == tuKhoa){
+            ds[i].xuat();
+            timThay = true; 
+        }
+    }
+
+    if(timThay == false){
+        cout << "Khong tim thay sinh vien nao hop le voi thong tin da nhap!" << endl;
+    }
 
     return 0;
 }
