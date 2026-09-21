@@ -21,8 +21,6 @@ class PS2 : public PS1 {
 };
 
 // ================= XAY DUNG PHUONG THUC =================
-
-// Ham tim Uoc chung lon nhat (UCLN) de phuc vu viec toi gian
 int timUCLN(int a, int b) {
     a = abs(a);
     b = abs(b);
@@ -37,14 +35,10 @@ int timUCLN(int a, int b) {
 void PS1::nhap() {
     cout << "Nhap tu so: "; 
     cin >> tuSo;
-    
-    // Yeu cau mau so khac 0
     do {
         cout << "Nhap mau so (khac 0): "; 
         cin >> mauSo;
-        if (mauSo == 0) {
-            cout << "Loi! Mau so phai khac 0. Vui long nhap lai.\n";
-        }
+        if (mauSo == 0) cout << "Loi! Mau so phai khac 0. Vui long nhap lai.\n";
     } while (mauSo == 0);
 }
 
@@ -52,8 +46,6 @@ void PS1::toiGian() {
     int ucln = timUCLN(tuSo, mauSo);
     tuSo = tuSo / ucln;
     mauSo = mauSo / ucln;
-    
-    // Xu ly truong hop mau so am (VD: 1/-2 -> -1/2)
     if (mauSo < 0) {
         tuSo = -tuSo;
         mauSo = -mauSo;
@@ -61,39 +53,63 @@ void PS1::toiGian() {
 }
 
 void PS1::in() {
-    toiGian(); // Goi ham toi gian truoc khi in
-    // Neu mau so la 1 thi chi can in tu so (VD: 5/1 -> 5)
-    if (mauSo == 1) {
-        cout << tuSo;
-    } else {
-        cout << tuSo << "/" << mauSo;
-    }
+    toiGian(); 
+    if (mauSo == 1) cout << tuSo;
+    else cout << tuSo << "/" << mauSo;
 }
 
-// Nap chong toan tu gan (=)
 PS2& PS2::operator=(const PS2& p) {
     this->tuSo = p.tuSo;
     this->mauSo = p.mauSo;
     return *this;
 }
 
-// Nap chong toan tu lon hon (>)
 bool PS2::operator>(PS2 p) {
-    // Ep kieu ve float de chia va so sanh cho nhanh, chinh xac
     float giaTri1 = (float)this->tuSo / this->mauSo;
     float giaTri2 = (float)p.tuSo / p.mauSo;
     return giaTri1 > giaTri2;
 }
 
-// ================= CHUONG TRINH CHINH =================
+// ================= CAU 3: MAIN (NHAP DS & SAP XEP) =================
 int main()
 {
-    // Chay thu phan so
-    cout << "--- TEST NHAP XUAT 1 PHAN SO ---" << endl;
-    PS2 psTest;
-    psTest.nhap();
-    cout << "Phan so vua nhap (da toi gian): ";
-    psTest.in();
+    int n;
+    PS2 ds[10]; // Toi da 10 phan tu
+    
+    // Kiem soat viec nhap n (1 <= n <= 10)
+    do {
+        cout << "Nhap so luong phan so (1 toi da 10): ";
+        cin >> n;
+        if (n <= 0 || n > 10) {
+            cout << "So luong khong hop le! Vui long nhap tu 1 den 10.\n";
+        }
+    } while (n <= 0 || n > 10);
+
+    // Nhap mang phan so
+    for (int i = 0; i < n; i++) {
+        cout << "\n--- Nhap phan so thu " << i+1 << " ---" << endl;
+        ds[i].nhap();
+    }
+
+    // Sap xep giam dan bang thuat toan noi bot 
+    // Su dung toan tu > va = da duoc nap chong o Cau 2
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (ds[j] > ds[i]) { 
+                PS2 temp = ds[i]; // Goi toan tu =
+                ds[i] = ds[j];    // Goi toan tu =
+                ds[j] = temp;     // Goi toan tu =
+            }
+        }
+    }
+
+    // In danh sach sau khi sap xep
+    cout << "\n================ DANH SACH PHAN SO GIAM DAN ================" << endl;
+    for (int i = 0; i < n; i++) {
+        ds[i].in();
+        if (i < n - 1) cout << "  ;  "; // In dau cham phay giua cac phan so cho dep
+    }
     cout << endl;
+
     return 0;
 }
