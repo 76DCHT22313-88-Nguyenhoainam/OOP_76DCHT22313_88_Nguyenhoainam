@@ -19,6 +19,7 @@ class SP2 : public SP1 {
         bool operator>(SP2 sp);
 };
 
+// ================= XAY DUNG CHI TIET PHUONG THUC =================
 SP1::SP1() {
     thuc = 0;
     ao = 0;
@@ -51,16 +52,40 @@ bool SP2::operator>(SP2 sp) {
     return this->tinhModule() > sp.tinhModule();
 }
 
-// ================= CHUONG TRINH CHINH =================
+// ================= CAU 3: MAIN (NHAP DANH SACH & SAP XEP) =================
 int main()
 {
-    // Chay thu phuong thuc nhap xuat cho 1 doi tuong
-    cout << "--- TEST NHAP XUAT 1 SO PHUC ---" << endl;
-    SP2 testSP;
-    testSP.nhap();
-    cout << "So phuc vua nhap: ";
-    testSP.in();
-    cout << "\nModule: " << testSP.tinhModule() << endl;
+    int n;
+    SP2 ds[10]; 
+    
+    do {
+        cout << "Nhap so luong so phuc (tu 1 den 10): ";
+        cin >> n;
+        if (n <= 0 || n > 10) cout << "So luong khong hop le! Vui long nhap lai.\n";
+    } while (n <= 0 || n > 10);
+
+    for (int i = 0; i < n; i++) {
+        cout << "\n--- Nhap so phuc thu " << i+1 << " ---" << endl;
+        ds[i].nhap();
+    }
+
+    // Sap xep giam dan bang thuat toan noi bot 
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (ds[j] > ds[i]) { 
+                SP2 temp = ds[i]; 
+                ds[i] = ds[j];    
+                ds[j] = temp;     
+            }
+        }
+    }
+
+    // In danh sach
+    cout << "\n================ DS SO PHUC GIAM DAN THEO MODULE ================" << endl;
+    for (int i = 0; i < n; i++) {
+        ds[i].in();
+        cout << "  (Module = " << ds[i].tinhModule() << ")" << endl;
+    }
 
     return 0;
 }
